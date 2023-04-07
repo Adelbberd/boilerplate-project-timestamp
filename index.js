@@ -19,20 +19,20 @@ app.get("/", function(req, res) {
 });
 
 // Timestamp Microservice project
-app.get("/api/:date?", function(req, res) {
+app.get("/api/:date?/", function(req, res) {
   var isValidDate = req.params.date;
 
   if (/[0-9]{5,}/.test(isValidDate)) {
     const timeStampInt = parseInt(isValidDate);
-    res.json({ unix: timeStampInt, utc: new Date(timeStampInt).toUTCString()});
+    res.json({ unix: timeStampInt, utc: new Date(timeStampInt).toUTCString() });
   } else if (!isNaN(Date.parse(isValidDate))) {
     const timeStampInt = Date.parse(isValidDate);
-    res.json({unix: timeStampInt, utc: new Date(timeStampInt).toUTCString()});
-  } else if (isValidDate == "") {
+    res.json({ unix: timeStampInt, utc: new Date(timeStampInt).toUTCString() });
+  } else if (isValidDate === null || isValidDate === "") {
     const currentDate = new Date();
-    res.json({unix: Date.parse(currentDate), utc: currentDate.toUTCString()});
+    res.json({ unix: parseInt(Date.parse(currentDate)), utc: currentDate.toUTCString() });
   } else {
-    res.json({error: 'Invalid Date'});
+    res.json({ error: 'Invalid Date' });
   }
 });
 
